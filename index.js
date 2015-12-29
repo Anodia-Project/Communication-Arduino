@@ -7,7 +7,7 @@ var Communication_Arduino = {
 
 	arduino: null,
 
-	init: function(anodia) {
+	init: function(anodia,callback) {
 
 		Anodia = anodia;
 		this.arduino = new five.Board({repl:false,debug:false});
@@ -16,8 +16,13 @@ var Communication_Arduino = {
 			Anodia.log(1,msg);
 		});
 
+		this.arduino.on("connect", function() {
+			Anodia.log(2,"Arduino is connected");
+		})
+
 		this.arduino.on("ready", function() {
-			Anodia.log(0,"Arduino is ready");
+			Anodia.log(2,"Arduino is ready");
+			callback(null);
 		});
 	},
 
